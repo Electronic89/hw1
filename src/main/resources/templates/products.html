@@ -1,0 +1,81 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+    <title>Каталог</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" th:href="@{/images/icons/favicon.png}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/fontawesome-5.0.8/css/fontawesome-all.min.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{fonts/iconic/css/material-design-iconic-font.min.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{vendor/animate/animate.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{vendor/css-hamburgers/hamburgers.min.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{vendor/animsition/css/animsition.min.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="css/util.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{css/util.min.css}">
+    <!--===============================================================================================-->
+    <!--<link rel="stylesheet" type="text/css" href="css/main.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{css/main.css}">
+    <!--===============================================================================================-->
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<div class="container">
+
+
+
+    <body>
+
+        <div class="product__filler_div">
+            <form method="get" th:action="@{/product}">
+                <label class="product__filler_label" for="minPrice">Min price</label><input type="number" id="minPrice" name="minPrice" th:value="${minPrice}">
+                <label class="product__filler_label" for="maxPrice">Max price</label><input type="number" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+        <table th:if="${productPage.hasContent()}">
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>price</th>
+            </tr>
+
+            <tr th:each="product : ${productPage.content}">
+                <!-- добавляем ссылку на id -->
+<!--                <td><a th:href="@{/product/form(productId = ${product.id})}"><span th:text="${product.id}">id</span></a></td>-->
+                <td><a th:href="@{/product/{productId}(productId = ${product.id})}"><span th:text="${product.id}">id</span></a></td>
+                <td th:text="${product.title}">title</td>
+                <td th:text="${product.price}">price</td>
+            </tr>
+        </table>
+
+        <div th:unless="${productPage.hasContent()}" class="product_unless_div">
+            <h3>No data</h3>
+        </div>
+
+        <pag th:if="${productPage.hasContent()}" th:replace="fragments/pagination.html" :: pagination />
+
+    </body>
+
+    <footer th:replace="fragments/footer.html" :: footer />
+
+</div>
+
+</html>
